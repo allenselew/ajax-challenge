@@ -3,11 +3,50 @@
 body {
     font-family: 'Ubuntu', 'Helvetica Neue', 'Helvetica', sans-serif;
     font-weight: 400;
+    background-color: #eee;
+}
+
+header {
+	margin: 10px;
+}
+
+lead {
+	font-size: 72px;
+	font-style: bold;
+	text-align: center;
 }
 
 .product-picture {
     float: left;
-    height: 130px;
+    height: 200px;
     margin-right: 10px;
+    margin-top: 15px;;
 }
 
+.product-description {
+	position: relative;
+	background-color: #ddd;
+	margin: 10px;
+	overflow: auto;
+}
+
+.product-wrapper {
+	margin: 0 auto;
+}
+
+.percentage-bar {
+	background-color: gold;
+	height: 18px;
+}
+
+.meter {
+	width: 100px;
+	height: 20px;
+	margin: 5px;
+	background-color: #ddd;
+	border: 1px solid black;
+}
+
+.ratings {
+	margin-left: 20px;
+}

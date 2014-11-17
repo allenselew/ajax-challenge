@@ -3,39 +3,137 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>Product Comments</title>
+        <title>Review The Super Bass-O-Matic '76</title>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
         <link rel="stylesheet" href="css/main.css">
     </head>
     <body>
 
-        <main class="container">
-            <section>
-                <img src="img/super-bass-o-matic-76.jpg" alt="product picture" class="product-picture">
-                <h1>The Super Bass-o-Matic '76</h1>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Officia cumque deserunt ullam repudiandae nisi corporis! Ipsum, ducimus commodi, itaque porro distinctio consequuntur! Autem doloremque numquam nemo ex nulla tempora quis! Lorem ipsum dolor sit amet, consectetur adipisicing elit. Unde nihil doloribus excepturi quisquam error possimus veritatis facere, commodi cumque ab atque dolore ducimus obcaecati ipsa, impedit! Consequuntur, eligendi iure cumque!</p>
-            </section>
+        <main class="container-fluid" ng-app="ReviewApp" ng-controller="ReviewController">
+            <div class="product-wrapper row">
+                <header>
+                    <lead>The world's finest product..</lead>
+                </header>
+                <section class="product-description col-md-6">
+                    <img src="img/super-bass-o-matic-76.jpg" alt="product picture" class="product-picture">
+                    <h1>The Super Bass-o-Matic '76</h1>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Officia cumque deserunt ullam repudiandae nisi corporis! Ipsum, ducimus commodi, itaque porro distinctio consequuntur! Autem doloremque numquam nemo ex nulla tempora quis! Lorem ipsum dolor sit amet, consectetur adipisicing elit. Unde nihil doloribus excepturi quisquam error possimus veritatis facere, commodi cumque ab atque dolore ducimus obcaecati ipsa, impedit! Consequuntur, eligendi iure cumque! Bresaola short loin leberkas kevin kielbasa fatback venison sausage shankle pastrami shank turkey bacon beef ribs cupim. Jerky fatback turducken, doner hamburger flank ham rump tail beef alcatra. T-bone turducken pastrami drumstick capicola flank. Kevin filet mignon turducken sausage porchetta meatball. Alcatra flank porchetta tenderloin. Collaboratively administrate turnkey channels whereas virtual e-tailers. Objectively seize scalable metrics whereas proactive e-services. Seamlessly empower fully researched growth strategies and interoperable internal or "organic" sources. Credibly innovate granular internal or "organic" sources whereas high standards in web-readiness. Energistically scale future-proof core competencies vis-a-vis impactful experiences. Dramatically synthesize integrated schemas with optimal networks. Interactively procrastinate high-payoff content without backward-compatible data. Quickly cultivate optimal processes and tactical architectures. Completely iterate covalent strategic theme areas via accurate e-markets.</p>
+                </section>
 
-            <section>
-                <h2>Add a Comment</h2>
-                <!--  
-                put a form here for entering a new comment
-                the user must select a rating, and enter a name, title, and comment body
-                before the comment can be saved to the server
-                for the rating selection, use the Angular Bootstrap Rating directive 
-                http://angular-ui.github.io/bootstrap/#/rating
-                their script file is included below
-                -->
-            </section>
-
-            <section>
-                <h2>Comments</h2>
-                <!-- 
-                display existing comments here
-                each comment should also have UI allowing the user to vote up/down the comment
-                as well as delete it
-                 -->
-            </section>
+                <section class="col-md-5">
+                    <h2>Add a Review</h2>
+                    <form ng-submit="addReview(newReview)">
+                        <div class="form-group form-inline">
+                            <label for="review-name">Your name:</label>
+                            <input type="text" id="review-name" class="form-control" placeholder="Write your name here" ng-model="newReview.name">
+                        </div>
+                        <div class="form-group form-inline">
+                            <label for="review-text">Review title:</label>
+                            <input type="text" id="review-title" class="form-control" placeholder="Write your review title here" ng-model="newReview.title" rows="3">
+                        </div>
+                        <div class="form-group">
+                            <label for="review-text">Review:</label>
+                            <textarea type="text" id="review-text" class="form-control" placeholder="Write your review here" ng-model="newReview.text" rows="3"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="review-rating">Your rating:</label>
+                            <rating max="5" ng-model="newReview.rating"></rating>
+                            <div class="form-group">
+                                <button type="submit" class="btn btn-primary" ng-disabled="inserting" ng-click="addReview(newReview)">Add Review</button>
+                                <img src="img/ajax-spinner.gif" alt="loading animation" ng-if="inserting">
+                            </div>
+                        </div>
+                    </form>
+                </section>
+            </div>
+            <div class="row">
+                <section class="col-md-2 ratings">
+                    <h2>Ratings</h2>
+                    <table>
+                        <tbody>
+                            <tr>
+                                <td>5 star</td>
+                                <td>
+                                    <div class="meter">
+                                        <div class="percentage-bar" style="width: {{fivewidth}}%"></div>
+                                    </div>
+                                </td>
+                                <td>{{five}} ratings</td>
+                            </tr>
+                            <tr>
+                                <td>4 star</td>
+                                <td>
+                                    <div class="meter">
+                                        <div class="percentage-bar" style="width: {{fourwidth}}%"></div>
+                                    </div>
+                                </td>
+                                <td>{{four}} ratings</td>
+                            </tr>
+                            <tr>
+                                <td>3 star</td>
+                                <td>
+                                    <div class="meter">
+                                        <div class="percentage-bar" style="width: {{threewidth}}%"></div>
+                                    </div>
+                                </td>
+                                <td>{{three}} ratings</td>
+                            </tr>
+                            <tr>
+                                <td>2 star</td>
+                                <td>
+                                    <div class="meter">
+                                        <div class="percentage-bar" style="width: {{twowidth}}%"></div>
+                                    </div>
+                                </td>
+                                <td>{{two}} ratings</td>
+                            </tr>
+                            <tr>
+                                <td>1 star</td>
+                                <td>
+                                    <div class="meter">
+                                        <div class="percentage-bar" style="width: {{onewidth}}%"></div>
+                                    </div>
+                                </td>
+                                <td>{{one}} ratings</td>
+                            </tr>
+                        </tbody>
+                    </table>    
+                </section>
+                <section class="col-md-9">
+                    <h2>Reviews</h2>
+                    <p>
+                        <button class="btn btn-primary" ng-click="refreshReviews()">Refresh</button>
+                        <img src="img/ajax-spinner.gif" alt="loading animation" ng-if="loading || updating">
+                    </p>
+                    <p style="text-align: center;" ng-if="isEmpty">No reviews yet. Be the first to make a review!</p>
+                    <table class="table" ng-if="!isEmpty">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Review Title</th>
+                                <th>Review</th>
+                                <th>Product Rating</th>
+                                <th>Helpful?</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="review in reviews">
+                                <td>{{review.name}}</td>
+                                <td>{{review.title}}</td>
+                                <td>{{review.text}}</td>
+                                <td>
+                                    <rating max="5" readonly="true" ng-model="review.rating" ng-change="updateReview(review)"></rating>
+                                </td>
+                                <td>{{review.votes || 0}}
+                                    <span class="glyphicon glyphicon-thumbs-up" ng-click="incrementVotes(review, 1)"></span>
+                                    <span class="glyphicon glyphicon-thumbs-down" ng-click="incrementVotes(review, -1)"></span>
+                                </td>
+                                <td><span class="glyphicon glyphicon-remove" ng-click="deleteReview(review)"></span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </section>
+            </div>
 
         </main>
 
